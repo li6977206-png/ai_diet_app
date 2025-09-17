@@ -1,22 +1,10 @@
-from flask import Flask, render_template, request
+import streamlit as st
 
-app = Flask(__name__)
+st.title("AI 智慧飲食系統 🍎")
+st.write("上傳食物照片，我會幫你辨識營養素！")
 
-@app.route('/')
-def index():
-    return render_template('index.html')  # ✅ 正確地渲染 HTML 模板
+uploaded_file = st.file_uploader("選擇一張圖片...", type=["jpg", "jpeg", "png"])
 
-@app.route('/recognize', methods=['POST'])
-def recognize():
-    file = request.files['image']
-
-    # 模擬結果（之後可接模型）
-    result = {
-        "food_name": "牛肉便當",
-        "calories": 700,
-        "protein": 25,
-        "carbs": 80,
-        "fat": 20
-    }
-
-    return render_template('index.html', result=result)  # ✅ 把結果傳給模板
+if uploaded_file is not None:
+    st.image(uploaded_file, caption="你上傳的圖片", use_column_width=True)
+    st.success("（這裡加上你的 AI 模型做食物辨識）")
